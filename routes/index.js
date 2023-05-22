@@ -1,19 +1,18 @@
 const express = require('express');
 const router = express.Router();
-const user = require('../controllers/user');
+const user = require('./user');
+const module = require('./module');
+const role = require('./role');
 
-const middlewares = require('../utils/middlewares');
-
-router.get('/', (req, res) => {
-  return res.status(200).json({
-    status: true,
-    message: 'Welcome to auth api!',
-    data: null
-  });
+router.get('/', (req, res, next) => {
+  res.status(200)
+    .json({
+      message: "Welcome at Home Page!!"
+    });
 });
 
-router.post('/auth/register', user.register);
-router.post('/auth/login', user.login);
-router.get('/auth/whoami', middlewares.auth, user.whoami);
+router.use('/auth/', user);
+router.use('/module', module);
+router.use('/role', role);
 
 module.exports = router;
